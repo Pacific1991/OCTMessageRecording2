@@ -17,6 +17,7 @@
 #import "OCTMessageText.h"
 #import "OCTMessageFile.h"
 #import "OCTMessageCall.h"
+#import "OCTMessageRecording.h"
 #import "OCTSettingsStorageObject.h"
 #import "OCTLogging.h"
 
@@ -354,9 +355,30 @@ static NSString *kSettingsStorageObjectPrimaryKey = @"kSettingsStorageObjectPrim
     messageText.type = type;
     messageText.messageId = messageId;
 
-    return [self addMessageAbstractWithChat:chat sender:sender messageText:messageText messageFile:nil messageCall:nil];
+    return [self addMessageAbstractWithChat:chat sender:sender messageRecording:nil messageText:messageText messageFile:nil messageCall:nil];
+           
 }
+- (OCTMessageAbstract *)addMessageWithRecording:(NSString *)recording
+                                           time:(float)time
+                                      type:(OCTToxMessageType)type
+                                      chat:(OCTChat *)chat
+                                    sender:(OCTFriend *)sender
+                                 messageId:(OCTToxMessageId)messageId
+{
+    NSParameterAssert(recording);
+    
+    OCTLogInfo(@"adding messageText to chat %@", chat);
+    OCTMessageRecording * messageRecording = [OCTMessageRecording new];
+    
+    messageRecording.recording = recording;
+    messageRecording.isDelivered = NO;
+    messageRecording.type = type;
+    messageRecording.time = time;
+    messageRecording.messageId = messageId;
+    
+    return [self addMessageAbstractWithChat:chat sender:sender messageRecording:messageRecording messageText:nil messageFile:nil messageCall:nil];
 
+}
 - (OCTMessageAbstract *)addMessageWithFileNumber:(OCTToxFileNumber)fileNumber
                                         fileType:(OCTMessageFileType)fileType
                                         fileSize:(OCTToxFileSize)fileSize
@@ -376,8 +398,9 @@ static NSString *kSettingsStorageObjectPrimaryKey = @"kSettingsStorageObjectPrim
     [messageFile internalSetFilePath:filePath];
     messageFile.fileUTI = fileUTI;
 
-    return [self addMessageAbstractWithChat:chat sender:sender messageText:nil messageFile:messageFile messageCall:nil];
-}
+    return [self addMessageAbstractWithChat:chat sender:sender messageRecording:nil messageText:nil messageFile:messageFile messageCall:nil];
+
+  }
 
 - (OCTMessageAbstract *)addMessageCall:(OCTCall *)call
 {
@@ -398,7 +421,9 @@ static NSString *kSettingsStorageObjectPrimaryKey = @"kSettingsStorageObjectPrim
     messageCall.callDuration = call.callDuration;
     messageCall.callEvent = event;
 
-    return [self addMessageAbstractWithChat:call.chat sender:call.caller messageText:nil messageFile:nil messageCall:messageCall];
+    return [self addMessageAbstractWithChat:call.chat sender:call.caller messageRecording:nil messageText:nil messageFile:nil messageCall:messageCall];
+
+  
 }
 
 #pragma mark -  Private
@@ -453,6 +478,9 @@ static NSString *kSettingsStorageObjectPrimaryKey = @"kSettingsStorageObjectPrim
     [migration enumerateObjects:OCTMessageText.className block:^(RLMObject *oldObject, RLMObject *newObject) {
         newObject[@"text"] = [oldObject[@"text"] length] > 0 ? oldObject[@"text"] : nil;
     }];
+    [migration enumerateObjects:OCTMessageRecording.className block:^(RLMObject *oldObject, RLMObject *newObject) {
+        newObject[@"recording"] = [oldObject[@"recording"] length] > 0 ? oldObject[@"recording"] : nil;
+    }];
 }
 
 - (void)doMigrationVersion5:(RLMMigration *)migration
@@ -468,21 +496,23 @@ static NSString *kSettingsStorageObjectPrimaryKey = @"kSettingsStorageObjectPrim
  */
 - (OCTMessageAbstract *)addMessageAbstractWithChat:(OCTChat *)chat
                                             sender:(OCTFriend *)sender
+                                       messageRecording:(OCTMessageRecording *)messageRecording
                                        messageText:(OCTMessageText *)messageText
                                        messageFile:(OCTMessageFile *)messageFile
                                        messageCall:(OCTMessageCall *)messageCall
 {
     NSParameterAssert(chat);
 
-    NSAssert( (messageText && ! messageFile && ! messageCall) ||
-              (! messageText && messageFile && ! messageCall) ||
-              (! messageText && ! messageFile && messageCall),
-              @"Wrong options passed. Only one of messageText, messageFile or messageCall should be non-nil.");
+//    NSAssert( (messageText && ! messageFile && ! messageCall) ||
+//              (! messageText && messageFile && ! messageCall) ||
+//              (! messageText && ! messageFile && messageCall),
+//              @"Wrong options passed. Only one of messageText, messageFile or messageCall should be non-nil.");
 
     OCTMessageAbstract *messageAbstract = [OCTMessageAbstract new];
     messageAbstract.dateInterval = [[NSDate date] timeIntervalSince1970];
     messageAbstract.senderUniqueIdentifier = sender.uniqueIdentifier;
     messageAbstract.chatUniqueIdentifier = chat.uniqueIdentifier;
+    messageAbstract.messageRecording = messageRecording;
     messageAbstract.messageText = messageText;
     messageAbstract.messageFile = messageFile;
     messageAbstract.messageCall = messageCall;
@@ -509,6 +539,9 @@ static NSString *kSettingsStorageObjectPrimaryKey = @"kSettingsStorageObjectPrim
         }
         if (message.messageCall) {
             [self.realm deleteObject:message.messageCall];
+        }
+        if (message.messageRecording) {
+            [self.realm deleteObject:message.messageRecording];
         }
     }
 

@@ -85,14 +85,14 @@ Pod::Spec.new do |s|
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
-  #  CocoaPods is smart about how it includes source code. For source files
+   #  CocoaPods is smart about how it includes source code. For source files
   #  giving a folder will include any swift, h, m, mm, c & cpp files.
   #  For header files it will include any header in the folder.
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "tox_OCT/*.{h.m}"
-  s.exclude_files = "Classes/Exclude"
+  s.source_files  = "tox_OCT/*.h","tox_OCT/*.m"
+
 
   # s.public_header_files = "Classes/**/*.h"
 

@@ -78,6 +78,12 @@
                                       chat:(OCTChat *)chat
                                     sender:(OCTFriend *)sender
                                  messageId:(OCTToxMessageId)messageId;
+- (OCTMessageAbstract *)addMessageWithRecording:(NSString *)recording
+                                           time:(float)time
+                                           type:(OCTToxMessageType)type
+                                           chat:(OCTChat *)chat
+                                         sender:(OCTFriend *)sender
+                                      messageId:(OCTToxMessageId)messageId;
 
 - (OCTMessageAbstract *)addMessageWithFileNumber:(OCTToxFileNumber)fileNumber
                                         fileType:(OCTMessageFileType)fileType

@@ -12,6 +12,7 @@
 #import "OCTRealmManager.h"
 #import "OCTMessageAbstract.h"
 #import "OCTMessageText.h"
+#import "OCTMessageRecording.h"
 #import "OCTChat.h"
 
 @interface OCTSubmanagerChats ()
@@ -60,6 +61,28 @@
     OCTRealmManager *realmManager = [self.dataSource managerGetRealmManager];
 
     return [realmManager addMessageWithText:text type:type chat:chat sender:nil messageId:messageId];
+}
+- (OCTMessageAbstract *)sendMessageToChat:(OCTChat *)chat
+                                     recording:(NSString *)recording
+                                     time:(float)times
+                                     type:(OCTToxMessageType)type
+                                    error:(NSError **)error
+{
+    NSParameterAssert(chat);
+    NSParameterAssert(recording);
+    
+    OCTTox *tox = [self.dataSource managerGetTox];
+    OCTFriend *friend = [chat.friends firstObject];
+    
+    OCTToxMessageId messageId = [tox sendMessageWithFriendNumber:friend.friendNumber type:type message:recording error:error];
+    
+    if (messageId == 0) {
+        return nil;
+    }
+    
+    OCTRealmManager *realmManager = [self.dataSource managerGetRealmManager];
+    
+    return [realmManager addMessageWithRecording:recording time:times type:type chat:chat sender:nil messageId:messageId];
 }
 
 - (BOOL)setIsTyping:(BOOL)isTyping inChat:(OCTChat *)chat error:(NSError **)error

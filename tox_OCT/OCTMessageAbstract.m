@@ -10,6 +10,7 @@
 #import "OCTMessageText.h"
 #import "OCTMessageFile.h"
 #import "OCTMessageCall.h"
+#import "OCTMessageRecording.h"
 
 @interface OCTMessageAbstract ()
 
@@ -45,6 +46,9 @@
     }
     else if (self.messageCall) {
         string = [self.messageCall description];
+    }
+    else if (self.messageRecording) {
+        string = [self.messageRecording description];
     }
 
     return [NSString stringWithFormat:@"OCTMessageAbstract with date %@, %@", self.date, string];
