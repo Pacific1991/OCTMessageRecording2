@@ -1,1 +1,0 @@
-../../../libopus-patched-config/src/tansig_table.h
