@@ -68,7 +68,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
 
   #  When using multiple platforms
-  # s.ios.deployment_target = "5.0"
+  # s.ios.deployment_target = "8.0"
   # s.osx.deployment_target = "10.7"
   # s.watchos.deployment_target = "2.0"
   # s.tvos.deployment_target = "9.0"
@@ -90,8 +90,9 @@ Pod::Spec.new do |s|
   #  For header files it will include any header in the folder.
   #  Not including the public_header_files will make all headers public.
   #
-
-  s.source_files  = "tox_OCT/*.h","tox_OCT/*.m"
+  
+  s.source_files = 'tox_OCT/**/*.{h,m}'
+  # s.source_files  = "tox_OCT/*{.h,m}"
 
 
   # s.public_header_files = "Classes/**/*.h"
