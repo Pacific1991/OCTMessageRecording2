@@ -1,0 +1,51 @@
+PODS:
+  - CocoaLumberjack (1.9.2):
+    - CocoaLumberjack/Extensions (= 1.9.2)
+  - CocoaLumberjack/Core (1.9.2)
+  - CocoaLumberjack/Extensions (1.9.2):
+    - CocoaLumberjack/Core
+  - FBSnapshotTestCase/Core (2.1.2)
+  - libopus-patched-config (1.1):
+    - libopus-patched-config/float (= 1.1)
+  - libopus-patched-config/float (1.1)
+  - libsodium (1.0.3)
+  - objcTox (0.6.0):
+    - CocoaLumberjack (= 1.9.2)
+    - Realm (= 1.0.1)
+    - toxcore (= 0.0.1-94cc8b1)
+    - TPCircularBuffer (~> 0.0.1)
+  - Realm (1.0.1):
+    - Realm/Headers (= 1.0.1)
+  - Realm/Headers (1.0.1)
+  - toxcore (0.0.1-94cc8b1):
+    - libopus-patched-config (= 1.1)
+    - libsodium (~> 1.0.1)
+  - TPCircularBuffer (0.0.1)
+
+DEPENDENCIES:
+  - FBSnapshotTestCase/Core
+  - objcTox (from `https://github.com/Antidote-for-Tox/objcTox.git`, commit `dd18363c863`)
+
+EXTERNAL SOURCES:
+  objcTox:
+    :commit: dd18363c863
+    :git: https://github.com/Antidote-for-Tox/objcTox.git
+
+CHECKOUT OPTIONS:
+  objcTox:
+    :commit: dd18363c863
+    :git: https://github.com/Antidote-for-Tox/objcTox.git
+
+SPEC CHECKSUMS:
+  CocoaLumberjack: 628fca2e88ef06f7cf6817309aa405f325d9a6fa
+  FBSnapshotTestCase: 918c55861356ee83aee7843d759f55a18ff6982b
+  libopus-patched-config: 12321105eb4b96e869b7957f3122345fd67928c3
+  libsodium: be547e31dc75725629acc5717dc0a40fc05ef243
+  objcTox: 60a3503a709c48614fbe6f20c0b59018ee9a387d
+  Realm: 2e15e39d35b08abb529e212ed5d8af107b5236c8
+  toxcore: 1a7016222913454f008566d48eabb629e633ec52
+  TPCircularBuffer: 949e9632b9fb99b7274d7b2296ee22bff5841e35
+
+PODFILE CHECKSUM: a429af524c6b086dbb228cba719df7698d75274c
+
+COCOAPODS: 1.0.1

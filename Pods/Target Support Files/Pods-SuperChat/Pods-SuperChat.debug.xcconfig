@@ -1,0 +1,9 @@
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}" "${PODS_ROOT}/toxcore/ios"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/libopus-patched-config/silk" $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/CocoaLumberjack" "${PODS_ROOT}/Headers/Public/FBSnapshotTestCase" "${PODS_ROOT}/Headers/Public/Realm" "${PODS_ROOT}/Headers/Public/TPCircularBuffer" "${PODS_ROOT}/Headers/Public/libopus-patched-config" "${PODS_ROOT}/Headers/Public/libsodium" "${PODS_ROOT}/Headers/Public/objcTox" "${PODS_ROOT}/Headers/Public/toxcore"
+LIBRARY_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/CocoaLumberjack" "$PODS_CONFIGURATION_BUILD_DIR/Realm" "$PODS_CONFIGURATION_BUILD_DIR/TPCircularBuffer" "$PODS_CONFIGURATION_BUILD_DIR/libopus-patched-config" "$PODS_CONFIGURATION_BUILD_DIR/libsodium" "$PODS_CONFIGURATION_BUILD_DIR/objcTox" "$PODS_CONFIGURATION_BUILD_DIR/toxcore" $(inherited) "${PODS_ROOT}/Realm/core"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/CocoaLumberjack" -isystem "${PODS_ROOT}/Headers/Public/FBSnapshotTestCase" -isystem "${PODS_ROOT}/Headers/Public/Realm" -isystem "${PODS_ROOT}/Headers/Public/TPCircularBuffer" -isystem "${PODS_ROOT}/Headers/Public/libopus-patched-config" -isystem "${PODS_ROOT}/Headers/Public/libsodium" -isystem "${PODS_ROOT}/Headers/Public/objcTox" -isystem "${PODS_ROOT}/Headers/Public/toxcore"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"CocoaLumberjack" -l"Realm" -l"TPCircularBuffer" -l"c++" -l"libopus-patched-config" -l"libsodium" -l"objcTox" -l"realm-ios" -l"toxcore" -framework "AudioToolbox" -framework "vpx"
+PODS_BUILD_DIR = $BUILD_DIR
+PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_ROOT = ${SRCROOT}/Pods
